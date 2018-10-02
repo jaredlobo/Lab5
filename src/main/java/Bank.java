@@ -6,10 +6,11 @@
  * accessing private variables.
  *
  * @see <a href="https://cs125.cs.illinois.edu/lab/5/">Lab 5 Description</a>
+ *
  */
 public class Bank {
 
-    public String bankName;
+    private String bankName;
 
     public Bank() {
         bankName = "Illini Bank";
@@ -26,9 +27,17 @@ public class Bank {
      * @return boolean
      */
     public boolean withdrawMoney(final BankAccount bankAccount, final double amount) {
-        /*
-         * Implement this function
-         */
+        if (amount < 0 ) {
+            return false;
+        }
+
+        bankAccount.setAccountBalance(bankAccount.getAccountBalance() - amount);
+
+        if (bankAccount.getAccountBalance() >= 0) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
