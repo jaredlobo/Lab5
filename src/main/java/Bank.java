@@ -10,8 +10,16 @@
  */
 public class Bank {
 
+
+    /**
+     * bankName of type String instance variable storing bank name
+     */
     private String bankName;
 
+
+    /**
+     * default constructor to initialize bank name
+     */
     public Bank() {
         bankName = "Illini Bank";
     }
@@ -27,13 +35,15 @@ public class Bank {
      * @return boolean
      */
     public boolean withdrawMoney(final BankAccount bankAccount, final double amount) {
-        if (amount < 0 ) {
+        if (amount < 0) {
             return false;
         }
 
         bankAccount.setAccountBalance(bankAccount.getAccountBalance() - amount);
 
         if (bankAccount.getAccountBalance() >= 0) {
+            System.out.println("Amount Withdrawn: " + amount);
+            System.out.println(bankAccount.getOwnerName() + " Account Balance: " + bankAccount.getAccountBalance());
             return true;
         }
 
@@ -51,9 +61,19 @@ public class Bank {
      * @return boolean
      */
     public boolean depositMoney(final BankAccount bankAccount, final double amount) {
-        /*
-         * Implement this function
-         */
+        if (amount < 0) {
+            return false;
+        }
+
+        bankAccount.setAccountBalance(bankAccount.getAccountBalance() + amount);
+
+        if (bankAccount.getAccountBalance() >= 0) {
+            System.out.println("Amount Deposited: " + amount);
+            System.out.println(bankAccount.getOwnerName() + " Account Balance: " + bankAccount.getAccountBalance());
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -70,9 +90,21 @@ public class Bank {
 
     public boolean transferMoney(final BankAccount source, final BankAccount destination,
             final double amount) {
-        /*
-         * Implement this function
-         */
+        if (amount < 0) {
+            return false;
+        }
+
+        source.setAccountBalance(source.getAccountBalance() - amount);
+        destination.setAccountBalance(destination.getAccountBalance() + amount);
+
+        if (source.getAccountBalance() >= 0 && destination.getAccountBalance() >= 0) {
+            System.out.println("Amount Transferred : " + amount);
+            System.out.println("Source Account Balance: " + source.getAccountBalance());
+            System.out.println("Destination Account Balance: " + destination.getAccountBalance());
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -83,21 +115,23 @@ public class Bank {
      */
 
     public void changeOwnerName(final BankAccount bankAccount, final String name) {
-        /*
-         * Implement this function
-         */
+        bankAccount.setOwnerName(name);
     }
 
-    public static int totalAccounts = 0;
+
+    /**
+     * public static variable storing number of accounts in bank
+     */
+    private static int totalAccounts = 0;
     /**
      * Uses static variable to get number of bank accounts opened.
      *
      * @return the total number of accounts
      */
-    public static int getNumberOfAccount() {
-        /*
-         * Implement this function
-         */
+    public int getNumberOfAccount() {
+        totalAccounts++;
+
+        return totalAccounts;
     }
 
     /**
@@ -129,7 +163,7 @@ public class Bank {
         bank.transferMoney(account2, account1, 350.0);
 
         // Print number of accounts
-        System.out.print("Number of active accounts at " + bank.bankName + " are ");
+        System.out.print("\nNumber of active accounts at " + bank.bankName + " are ");
         System.out.println(Bank.totalAccounts);
     }
 }
